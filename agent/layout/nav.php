@@ -7,7 +7,8 @@ use Dotenv\Dotenv;
 $dotenv = Dotenv::createImmutable('./');
 $dotenv->load();
 $host_url = $_ENV['HOST_URL'];
-$file_path = $_ENV['FILE_PATH'];
+
+$file_path = $_ENV['file_path'];
 
  ?>
 

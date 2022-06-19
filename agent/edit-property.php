@@ -335,7 +335,7 @@ position:absolute;
 
         let image_path = '<?php echo $file_path; ?>' ;
         axios.get('<?php echo $host_url; ?>/property/<?php echo $_GET['edit_id']  ?>').then((res)=>{
-        
+        alert(image_path);
         $('#title').val(res.data.title);    
         $('#description').val(res.data.description);
         $('#price').val(res.data.price);

@@ -210,7 +210,7 @@
       columnDefs: [
         {  targets: 5,
          render: function (data, type, row, meta) {
-            return 'Rs. '+data.toFixed(2);
+            return 'Rs. '+data;
          }
 
       },

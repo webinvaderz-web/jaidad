@@ -144,7 +144,7 @@
       'serverSide': true,
       'serverMethod': 'get',
       'ajax': {
-          'url':'http://127.0.0.1:8000/api/features/datatable'
+          'url':'<?php echo $host_url; ?>/features/datatable'
       },
       'columns': [
         {data:'id'},
@@ -162,7 +162,7 @@
     ]
         });
    
-    //         axios.get('http://127.0.0.1:8000/api/properties')
+    //         axios.get('<?php echo $host_url; ?>/properties')
     //         .then(function(response)
     //         {
     //             console.log(response);
@@ -179,7 +179,7 @@
             })
             .then((willDelete) => {
             if (willDelete) {
-                axios.delete('http://127.0.0.1:8000/api/feature/'+id+'/delete').then((res)=>{
+                axios.delete('<?php echo $host_url; ?>/feature/'+id+'/delete').then((res)=>{
                     swal("Your Feature Is Deleted Successfully !!", {
                         icon: "success",
                         });

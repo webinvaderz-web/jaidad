@@ -251,7 +251,7 @@ position:absolute;
     var formData = new FormData();
             formData.append('title',$('#feature-title').val());
             formData.append('description',$('#feature-description').val());
-    axios.post('http://127.0.0.1:8000/api/feature', formData, {
+    axios.post('<?php echo $host_url; ?>/feature', formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     "Accept" : "application/json"
@@ -295,7 +295,7 @@ position:absolute;
             formData.append('_method','PUT');
             formData.append('title',$('#title').val());
             formData.append('description',$('#description').val());
-    axios.post('http://127.0.0.1:8000/api/feature/'+$('#feature-id').val()+"/update", formData, {
+    axios.post('<?php echo $host_url; ?>/feature/'+$('#feature-id').val()+"/update", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     "Accept" : "application/json"
@@ -328,7 +328,7 @@ position:absolute;
       'serverSide': true,
       'serverMethod': 'get',
       'ajax': {
-          'url':'http://127.0.0.1:8000/api/features/datatable'
+          'url':'<?php echo $host_url; ?>/features/datatable'
       },
       'columns': [
         {data:'id'},
@@ -362,7 +362,7 @@ position:absolute;
             })
             .then((willDelete) => {
             if (willDelete) {
-                axios.delete('http://127.0.0.1:8000/api/feature/'+id+'/delete').then((res)=>{
+                axios.delete('<?php echo $host_url; ?>/feature/'+id+'/delete').then((res)=>{
                     swal("Your Feature Is Deleted Successfully !!", {
                         icon: "success",
                         });

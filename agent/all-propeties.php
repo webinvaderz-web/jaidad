@@ -156,7 +156,7 @@
                     }
                     var formData = new FormData();
                     formData.append('status',status);
-                    axios.post('http://127.0.0.1:8000/api/property/featured/'+property_id, formData, {
+                    axios.post('<?php echo $host_url; ?>/property/featured/'+property_id, formData, {
                     headers: {
                         "Content-Type": "multipart/form-data",
                         "Accept" : "application/json"
@@ -178,7 +178,7 @@
                     }
                     var formData = new FormData();
                     formData.append('status',status);
-                    axios.post('http://127.0.0.1:8000/api/property/status/'+property_id, formData, {
+                    axios.post('<?php echo $host_url; ?>/property/status/'+property_id, formData, {
                     headers: {
                         "Content-Type": "multipart/form-data",
                         "Accept" : "application/json"
@@ -194,7 +194,7 @@
       'serverSide': true,
       'serverMethod': 'get',
       'ajax': {
-          'url':'http://127.0.0.1:8000/api/properties'
+          'url':'<?php echo $host_url; ?>/properties'
       },
       'columns': [
         {data:'id'},
@@ -243,12 +243,13 @@
 
 
    
-    //         axios.get('http://127.0.0.1:8000/api/properties')
+    //         axios.get('<?php echo $host_url; ?>/properties')
     //         .then(function(response)
     //         {
     //             console.log(response);
     //         })
         });
+     console.log('<?php print_r($_ENV); ?>')
      function deleteProperty(id)
      {
         swal({
@@ -260,7 +261,7 @@
             })
             .then((willDelete) => {
             if (willDelete) {
-                axios.delete('http://127.0.0.1:8000/api/property/'+id+'/delete').then((res)=>{
+                axios.delete(`<?php echo $host_url; ?>/property/${id}/delete`).then((res)=>{
                     swal("Your Listing Is Deleted Successfully !!", {
                         icon: "success",
                         });

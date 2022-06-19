@@ -250,14 +250,14 @@ position:absolute;
 
 
     $(function() {
-      axios.get('http://127.0.0.1:8000/api/features').then((res)=>{
+      axios.get('<?php echo $host_url; ?>/features').then((res)=>{
         console.log(res.data)
             Object.keys(res.data).forEach(key => {
                 $('#feature_id').append('<option value=' + res.data[key]['id'] + '>' + res.data[key]['title'] + '</option>');
                 $('#description-feature').append('<option value=' + res.data[key]['id'] + '>' + res.data[key]['title'] + '</option>');
                     }); 
         })
-        // axios.get('http://127.0.0.1:8000/api/features').then((res)=>{
+        // axios.get('<?php echo $host_url; ?>/features').then((res)=>{
         // console.log(res.data)
         //     Object.keys(res.data).forEach(key => {
                 
@@ -272,7 +272,7 @@ position:absolute;
     var formData = new FormData();
             formData.append('name',$('#feature-detail-name').val());
             formData.append('feature_id',$('#feature_id option:selected').val());
-    axios.post('http://127.0.0.1:8000/api/feature-detail', formData, {
+    axios.post('<?php echo $host_url; ?>/feature-detail', formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     "Accept" : "application/json"
@@ -321,7 +321,7 @@ position:absolute;
             formData.append('_method','PUT');
             formData.append('name',$('#title').val());
             formData.append('feature_id',$('#description-feature').val());
-    axios.post('http://127.0.0.1:8000/api/feature-detail/'+$('#feature-id').val()+"/update", formData, {
+    axios.post('<?php echo $host_url; ?>/feature-detail/'+$('#feature-id').val()+"/update", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     "Accept" : "application/json"
@@ -354,7 +354,7 @@ position:absolute;
       'serverSide': true,
       'serverMethod': 'get',
       'ajax': {
-          'url':'http://127.0.0.1:8000/api/feature-details/datatable'
+          'url':'<?php echo $host_url; ?>/feature-details/datatable'
       },
       'columns': [
         {data:'id'},
@@ -388,7 +388,7 @@ position:absolute;
             })
             .then((willDelete) => {
             if (willDelete) {
-                axios.delete('http://127.0.0.1:8000/api/feature-detail/'+id+'/delete').then((res)=>{
+                axios.delete('<?php echo $host_url; ?>/feature-detail/'+id+'/delete').then((res)=>{
                     swal("Your Feature Is Deleted Successfully !!", {
                         icon: "success",
                         });

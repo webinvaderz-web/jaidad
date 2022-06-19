@@ -151,7 +151,7 @@
     $.widget.bridge('uibutton', $.ui.button)
 
     $(function() {
-        axios.get('http://127.0.0.1:8000/api/dashboard').then((res)=>{
+        axios.get('<?php echo $host_url; ?>/dashboard').then((res)=>{
           $('.properties_count').text(res.data.properties_count);
           $('.properties_sale').text(res.data.properties_rent);
           $('.properties_rent').text(res.data.properties_sale);

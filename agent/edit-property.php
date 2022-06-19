@@ -327,14 +327,14 @@ position:absolute;
         $(".loader").css("display", "block");
         $('.feature_ids').select2();
         let features_arr = [];
-        axios.get('http://127.0.0.1:8000/api/feature-details').then((res)=>{
+        axios.get('<?php echo $host_url; ?>/feature-details').then((res)=>{
             Object.keys(res.data).forEach(key => {
                 $('.feature_ids').append('<option value=' + res.data[key]['id'] + '>' + res.data[key]['name'] + '</option>');
                     }); 
         })
 
         let image_path = 'http://127.0.0.1:8000/uploads/' ;
-        axios.get('http://127.0.0.1:8000/api/property/<?php echo $_GET['edit_id']  ?>').then((res)=>{
+        axios.get('<?php echo $host_url; ?>/property/<?php echo $_GET['edit_id']  ?>').then((res)=>{
         
         $('#title').val(res.data.title);    
         $('#description').val(res.data.description);
@@ -407,7 +407,7 @@ position:absolute;
                     formData.append('image_gallery[]', files[i])
                     }
 
-            axios.post("http://127.0.0.1:8000/api/property/<?php echo $_GET['edit_id']  ?>/update", formData, {
+            axios.post("<?php echo $host_url; ?>/property/<?php echo $_GET['edit_id']  ?>/update", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     "Accept" : "application/json"

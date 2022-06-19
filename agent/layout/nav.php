@@ -1,4 +1,17 @@
-        <nav class="main-header navbar navbar-expand navbar-dark navbar-dark">
+ 
+ <?php
+ 
+ require './vendor/autoload.php';
+
+use Dotenv\Dotenv;
+$dotenv = Dotenv::createImmutable('./');
+$dotenv->load();
+$host_url = $_ENV['HOST_URL'];
+
+ ?>
+
+ 
+ <nav class="main-header navbar navbar-expand navbar-dark navbar-dark">
             <!-- Left navbar links -->
             <ul class="navbar-nav">
                 <li class="nav-item">

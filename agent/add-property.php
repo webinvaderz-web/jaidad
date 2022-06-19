@@ -307,7 +307,7 @@ position:absolute;
 
 <script>
     $(function() {
-        axios.get('http://127.0.0.1:8000/api/feature-details').then((res)=>{
+        axios.get('<?php echo $host_url; ?>/feature-details').then((res)=>{
             Object.keys(res.data).forEach(key => {
                 $('.feature_ids').append('<option value=' + res.data[key]['id'] + '>' + res.data[key]['name'] + '</option>');
                     }); 
@@ -348,7 +348,7 @@ position:absolute;
                     }
             // formData.append("image_gallery[]", document.getElementById('image_gallery').files);
 
-            axios.post("http://127.0.0.1:8000/api/property", formData, {
+            axios.post("<?php echo $host_url; ?>/property", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     "Accept" : "application/json"

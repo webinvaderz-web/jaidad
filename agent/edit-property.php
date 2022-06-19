@@ -333,7 +333,7 @@ position:absolute;
                     }); 
         })
 
-        let image_path = 'http://127.0.0.1:8000/uploads/' ;
+        let image_path = '<?php echo $file_path; ?>' ;
         axios.get('<?php echo $host_url; ?>/property/<?php echo $_GET['edit_id']  ?>').then((res)=>{
         
         $('#title').val(res.data.title);    

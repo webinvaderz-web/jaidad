@@ -249,7 +249,7 @@
     //             console.log(response);
     //         })
         });
-     console.log('<?php print_r($_ENV); ?>')
+
      function deleteProperty(id)
      {
         swal({

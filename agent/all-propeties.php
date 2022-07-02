@@ -1,3 +1,11 @@
+<?php 
+    session_start();
+    if (!isset($_SESSION["user_id"]))
+    {
+        header("location: login.php");
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -142,7 +150,7 @@
     <!-- Page specific script -->
     <script>
         $(function() {
-
+            
                  jQuery(document).on('change', '.featured_switch', function(event) 
                  {
                     let status = 0;
@@ -188,30 +196,30 @@
                 })
                 }); 
 
- 
+            
             $('#example2').DataTable({
-      'processing': true,
-      'serverSide': true,
-      'serverMethod': 'get',
-      'ajax': {
-          'url':'<?php echo $host_url; ?>/properties'
-      },
-      'columns': [
-        {data:'id'},
-         { data: 'title' },
-         { data: 'area' },
-         { data: 'type' },
-         { data: 'bedrooms' },
-         { data: 'price' },
-         { data: 'feature_id' },
-         { data: 'status' },
-         {data:'id'},
-      ],
-      columnDefs: [
-        {  targets: 5,
-         render: function (data, type, row, meta) {
-            return 'Rs. '+data;
-         }
+            'processing': true,
+            'serverSide': true,
+            'serverMethod': 'get',
+            'ajax': {
+            'url':'<?php echo $host_url; ?>/properties/<?php echo $_SESSION['user_id']; ?>/<?php echo $_SESSION['user_type']; ?>'
+            },
+            'columns': [
+                {data:'id'},
+                { data: 'title' },
+                { data: 'area' },
+                { data: 'type' },
+                { data: 'bedrooms' },
+                { data: 'price' },
+                { data: 'feature_id' },
+                { data: 'status' },
+                {data:'id'},
+            ],
+            columnDefs: [
+                {  targets: 5,
+                render: function (data, type, row, meta) {
+                    return 'Rs. '+data;
+                }
 
       },
         {  targets: 6,

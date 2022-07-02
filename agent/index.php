@@ -1,3 +1,10 @@
+<?php 
+    session_start();
+    if (!isset($_SESSION["user_id"]))
+    {
+        header("location: login.php");
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -153,8 +160,8 @@
     $(function() {
         axios.get('<?php echo $host_url; ?>/dashboard').then((res)=>{
           $('.properties_count').text(res.data.properties_count);
-          $('.properties_sale').text(res.data.properties_rent);
-          $('.properties_rent').text(res.data.properties_sale);
+          $('.properties_sale').text(res.data.properties_sale);
+          $('.properties_rent').text(res.data.properties_rent);
         })}
         );
   </script>

@@ -4,7 +4,9 @@
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="info">
-            <a href="#" class="d-block">User: Danish</a>
+
+            <a href="#" class="d-block">User: <?php echo $_SESSION['name']?></a>
+            <a href="logout.php">Logout</a>
         </div>
     </div>
 
@@ -76,10 +78,23 @@
                     </li> -->
                 </ul>
             </li>
+            <?php  
+                if(isset($_SESSION['user_type']) && $_SESSION['user_type'] == 0)
+                {
+                    echo '<li class="nav-item">
+                        <a href="users.php" class="nav-link">
+                            <i class="nav-icon far fa-user"></i>
+                            <p>Agents</p>
+                        </a>
+                    </li>';
+                }  
+
+                ?>
+
             <li class="nav-item">
                         <a href="features.php" class="nav-link">
                             <i class="nav-icon far fa-image"></i>
-                            <p>All Features</p>
+                            <p>Features</p>
                         </a>
             </li>
             <li class="nav-item">
@@ -88,6 +103,7 @@
                             <p>Feature Details</p>
                         </a>
             </li>
+
 
             <!-- <li class="nav-item">
                 <a href="myprofile.php" class="nav-link">

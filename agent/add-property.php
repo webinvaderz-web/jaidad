@@ -1,3 +1,10 @@
+<?php 
+    session_start();
+    if (!isset($_SESSION["user_id"]))
+    {
+        header("location: login.php");
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -336,6 +343,8 @@ position:absolute;
             formData.append('year_built',$('#year_built').val());
             formData.append('plot_size_prefix',$('#plot_size_prefix').val());
             formData.append('plot_size',$('#plot_size').val());
+            formData.append('agent_id',<?php echo $_SESSION['user_id'] ?>);
+
             $("#feature_ids > option:selected").each(function() {
                 formData.append('feature_detail_ids[]', this.value);
             });
@@ -360,7 +369,7 @@ position:absolute;
                     text: "Your Property Has Been Listed",
                     type: "success"
                     }).then(function() {
-                        window.location = "/jaidad/agent/all-propeties.php";
+                        window.location.href = "all-propeties.php";
                     });
                 }).catch((error)=>
                 {   console.log(error.response.data.errors);

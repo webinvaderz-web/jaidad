@@ -1,3 +1,10 @@
+<?php 
+    session_start();
+    if (!isset($_SESSION["user_id"]))
+    {
+        header("location: login.php");
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -419,7 +426,7 @@ position:absolute;
                     text: "Your Property Has Been Updated Successfully !",
                     type: "success"
                     }).then(function() {
-                        window.location = "/jaidad/agent/all-propeties.php";
+                        window.location.href = "all-propeties.php";
                     });
 
                 }).catch((error)=>

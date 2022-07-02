@@ -27,9 +27,17 @@ class PropertyController extends Controller
     {
         return response()->json(Property::with('property_gallery','features')->paginate(),200);
     }
-    public function dataTable()
+    public function dataTable($id,$user_type)
     {
-        return DataTables::eloquent(Property::query())->make(true);
+        if($user_type == 0)
+        {
+            return DataTables::eloquent(Property::query())->make(true);
+        }
+        else
+        {
+            return DataTables::eloquent(Property::whereAgentId($id))->make(true);
+        }
+
     }
 
     public function show(Property $property)

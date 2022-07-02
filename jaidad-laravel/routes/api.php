@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\FeatureController;
 use App\Http\Controllers\Api\FeatureDetailController;
 use App\Http\Controllers\Api\PropertyController;
+use App\Http\Controllers\UserController;
 use App\Models\FeatureDetail;
 use App\Models\Property;
 use App\Models\PropertyGallery;
@@ -27,7 +28,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/dashboard',[PropertyController::class,'dashboard']);
 
 // PROPERTY ROUTES
-Route::get('/properties',[PropertyController::class,'dataTable'])->name('properties');
+Route::get('/properties/{id}/{user_type}',[PropertyController::class,'dataTable'])->name('properties');
 Route::get('/properties/all',[PropertyController::class,'index'])->name('properties.all');
 Route::get('/property/{property}',[PropertyController::class,'show'])->name('property');
 Route::post('/property',[PropertyController::class,'store'])->name('store.property');
@@ -52,3 +53,11 @@ Route::post('/feature-detail',[FeatureDetailController::class,'store'])->name('f
 Route::put('/feature-detail/{feature_detail}/update',[FeatureDetailController::class,'update'])->name('update.feature');
 Route::delete('/feature-detail/{feature_detail}/delete',[FeatureDetailController::class,'destroy'])->name('delete.feature-detail');
 Route::get('/feature-details/datatable',[FeatureDetailController::class,'dataTable'])->name('feature-details.datatable');
+
+Route::get('/users',[UserController::class,'index'])->name('users');
+Route::post('/user',[UserController::class,'store'])->name('user.store');
+Route::put('/user/{user}/update',[UserController::class,'update'])->name('update.feature');
+Route::delete('/user/{user}/delete',[UserController::class,'destroy'])->name('delete.user');
+Route::get('/users/datatable',[UserController::class,'dataTable'])->name('users.datatable');
+Route::post('/login',[UserController::class,'login'])->name('login');
+

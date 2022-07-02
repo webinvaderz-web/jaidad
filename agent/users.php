@@ -4,6 +4,10 @@
     {
         header("location: login.php");
     }
+    if ($_SESSION["user_type"] != 0  )
+    {
+        header("location: index.php");
+    }
 ?>
 
 <!DOCTYPE html>
@@ -68,12 +72,12 @@ position:absolute;
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Feature Details</h1>
+                            <h1>Users</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active">Features</li>
+                                <li class="breadcrumb-item active">Agents</li>
                             </ol>
                         </div>
                     </div>
@@ -87,22 +91,18 @@ position:absolute;
                         <div class="row">
                             <div class="col-12">
                                 <div class="card">
-                                <div class=" d-flex justify-content-between">
-                                        <h3 style="margin-top:20px;margin-left:20px"  class="card-title">Feature Detailss</h3>
-                                        <button  style="margin-top:20px;margin-right:20px" class="btn btn-success add-feature">Add Feature Details</button>
+                                    <div class=" d-flex justify-content-between">
+                                        <h3 style="margin-top:20px;margin-left:20px"  class="card-title">Agents</h3>
+                                        <button  style="margin-top:20px;margin-right:20px" class="btn btn-success add-user">Add Agent</button>
                                     </div>
-                                    <!-- <div class="card-header">
-                                        <h3 class="card-title">Features</h3>
-                                        <button class="add-feature">Add Feature</button>
-                                    </div> -->
                                     <!-- /.card-header -->
                                     <div class="card-body">
                                         <table id="example2" class="table table-bordered table-hover">
                                             <thead>
                                                 <tr>
                                                     <th>S.no</th>
-                                                    <th>Title</th>
-                                                    <th>Main Feature</th>
+                                                    <th>Name</th>
+                                                    <th>Email</th>
                                                     <th></th>
                                                     <!-- <th>Property Status</th>
                                                     <th>Status</th>
@@ -137,39 +137,6 @@ position:absolute;
 <!-- /.content-wrapper -->
 
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Title:</label>
-            <input type="text" class="form-control" id="title">
-            <input type="text" class="form-control" id="feature-id" value="" hidden>
-          </div>
-          <div class="form-group">
-            <label for="message-text" class="col-form-label">Description</label>
-            <select class="form-control" id="description-feature">
-
-            </select>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary update-feature">Update</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
 <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -182,19 +149,58 @@ position:absolute;
       <div class="modal-body">
         <form>
           <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Nmae:</label>
-            <input type="text" class="form-control" id="feature-detail-name">
+            <label for="recipient-name" class="col-form-label">Name:</label>
+            <input type="text" class="form-control" id="name">
           </div>
           <div class="form-group">
-          <label for="recipient-name" class="col-form-label">Main Feature:</label>
-          <select name="feature_id" class="form-control" id="feature_id">
-              <option value="none"  disabled selected>Please Select Main Feature</option>
-          </select>
+            <label for="message-text" class="col-form-label">Email</label>
+            <input type="email" class="form-control" id="email">
+            <!-- <textarea class="form-control" id="email"></textarea> -->
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Password</label>
+            <input type="password" class="form-control" id="password">
+            <!-- <textarea class="form-control" id="email"></textarea> -->
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary store-feature">Add</button>
+        <button type="button" class="btn btn-primary store-user">Add</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Name:</label>
+            <input type="text" class="form-control" id="name1">
+            <input type="text" class="form-control" id="user-id1" value="" hidden>
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Email</label>
+            <input type="email" class="form-control" id="email1">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Password</label>
+            <input type="password" class="form-control" id="password1">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary update-user">Update</button>
       </div>
     </div>
   </div>
@@ -258,29 +264,18 @@ position:absolute;
 
 
     $(function() {
-      axios.get('<?php echo $host_url; ?>/features').then((res)=>{
-        console.log(res.data)
-            Object.keys(res.data).forEach(key => {
-                $('#feature_id').append('<option value=' + res.data[key]['id'] + '>' + res.data[key]['title'] + '</option>');
-                $('#description-feature').append('<option value=' + res.data[key]['id'] + '>' + res.data[key]['title'] + '</option>');
-                    }); 
-        })
-        // axios.get('<?php echo $host_url; ?>/features').then((res)=>{
-        // console.log(res.data)
-        //     Object.keys(res.data).forEach(key => {
-                
-        //             }); 
-        // })
 
-        jQuery(document).on('click', '.add-feature', function(event) {
+        jQuery(document).on('click', '.add-user', function(event) {
             $('#exampleModal1').modal('show');         
 
  });
- jQuery(document).on('click', '.store-feature', function(event) {
-    var formData = new FormData();
-            formData.append('name',$('#feature-detail-name').val());
-            formData.append('feature_id',$('#feature_id option:selected').val());
-    axios.post('<?php echo $host_url; ?>/feature-detail', formData, {
+ jQuery(document).on('click', '.store-user', function(event) {
+
+            var formData = new FormData();
+            formData.append('name',$('#name').val());
+            formData.append('email',$('#email').val());
+            formData.append('password',$('#password').val());
+            axios.post('<?php echo $host_url; ?>/user', formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     "Accept" : "application/json"
@@ -288,8 +283,8 @@ position:absolute;
                 }).then((res)=>
                 {
                     swal({
-                    title: "Feature Detail Added Successful !",
-                    text: "Your Feature Detail Has Been Added Successfully !",
+                    title: "Agent Created Successful !",
+                    text: "Your Agent Has Been Created Successfully !",
                     type: "success"
                     }).then(function() {
                         $('#exampleModal1').modal('hide');
@@ -310,26 +305,24 @@ position:absolute;
  });
 
       
-        jQuery(document).on('click', '.edit-feature', function(event) {
-          $('#description-feature option:selected').removeAttr('selected');
+        jQuery(document).on('click', '.edit-user', function(event) {
+            console.log($(this).data('name'));
             $('#exampleModal').modal('show');
-            $('#title').val($(this).data('title'));
-            // $("#description").val($(this).data('description'));
-            $('#description-feature option[value='+$(this).data('description')+']').attr('selected','selected');
-            $('#feature-id').val($(this).data('id'));
+            $('#name1').val($(this).data('name'));
+            $('#email1').val($(this).data('email'));
+            $('#password').val("");
+            $('#user-id1').val($(this).data('id'));
            
 
  });
 
- jQuery(document).on('click', '.update-feature', function(event) {
-  console.log($('#title').val());
-  console.log($('#description').val());
-  console.log($('#feature-id').val());
-    var formData = new FormData();
+ jQuery(document).on('click', '.update-user', function(event) {
+            var formData = new FormData();
             formData.append('_method','PUT');
-            formData.append('name',$('#title').val());
-            formData.append('feature_id',$('#description-feature').val());
-    axios.post('<?php echo $host_url; ?>/feature-detail/'+$('#feature-id').val()+"/update", formData, {
+            formData.append('name',$('#name1').val());
+            formData.append('email',$('#email1').val());
+            formData.append('password',$('#password1').val());
+    axios.post('<?php echo $host_url; ?>/user/'+$('#user-id1').val()+"/update", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     "Accept" : "application/json"
@@ -337,8 +330,8 @@ position:absolute;
                 }).then((res)=>
                 {
                     swal({
-                    title: "Feature Edited Successful !",
-                    text: "Your Feature Has Been Updated Successfully !",
+                    title: "Agent Edited Successful !",
+                    text: "Your Agents Credentials Have Been Updated!",
                     type: "success"
                     }).then(function() {
                         $('#exampleModal').modal('hide');
@@ -362,18 +355,18 @@ position:absolute;
       'serverSide': true,
       'serverMethod': 'get',
       'ajax': {
-          'url':'<?php echo $host_url; ?>/feature-details/datatable'
+          'url':'<?php echo $host_url; ?>/users/datatable'
       },
       'columns': [
         {data:'id'},
          { data: 'name' },
-         {data:'feature.title'},
+         { data: 'email' },
          {data:'id'},
       ],
       columnDefs: [
       {  targets: 3,
          render: function (data, type, row, meta) {
-            return '<button class="edit-feature btn btn-primary btn-small" data-id="'+data+'" data-title="'+row.name+'" data-description="'+row.feature_id+'">Edit</button> <button class="btn btn-danger btn-small"  onClick="deleteFeature('+data+')">Delete</button>';
+            return '<button class="btn btn-primary btn-small edit-user" data-id="'+data+'" data-name="'+row.name+'" data-email="'+row.email+'">Edit</button> <button class="btn btn-danger btn-small" onClick="deleteFeature('+data+')">Delete</button>';
          }
 
       }
@@ -389,15 +382,15 @@ position:absolute;
         {
         swal({
             title: "Are you sure?",
-            text: "This Feature Detail Will Be Deleted",
+            text: "This Agent Will Be Deleted And Also All the properties posted by this user will be deleted",
             icon: "warning",
             buttons: true,
             dangerMode: true,
             })
             .then((willDelete) => {
             if (willDelete) {
-                axios.delete('<?php echo $host_url; ?>/feature-detail/'+id+'/delete').then((res)=>{
-                    swal("Your Feature Is Deleted Successfully !!", {
+                axios.delete('<?php echo $host_url; ?>/user/'+id+'/delete').then((res)=>{
+                    swal("Your Agent is Deleted Successfully !!", {
                         icon: "success",
                         });
 

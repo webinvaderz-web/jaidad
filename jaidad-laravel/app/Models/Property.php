@@ -19,6 +19,10 @@ class Property extends Model
     {
         return $this->hasOne('\App\Models\Feature','id','feature_id');
     }
+    public function agent()
+    {
+        return $this->hasOne('\App\Models\Feature','id','agent_id');
+    }
     public function feature_details()
     {
         return $this->belongsToMany(FeatureDetail::class,'property_feature_detail','property_id','feature_detail_id');

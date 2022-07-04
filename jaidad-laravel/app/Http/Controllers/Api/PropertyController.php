@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Enquiry;
 use App\Models\FeatureDetail;
 use App\Models\Property;
 use App\Models\PropertyFeatureDetail;
@@ -224,5 +225,33 @@ class PropertyController extends Controller
     {
         $property->update(['status'=>$req->status]);
         return response('success',200);
+    }
+    public function enquiry(Property $property,Request $req)
+    {
+        $req->validate([
+            'name'=> 'required',
+            'phone_no'=> 'required',
+        ]);
+        Enquiry::create([
+            'name' => $req->name,
+            'email' => $req->email ?? null,
+            'phone_no' => $req->phone_no,
+            'agent_id' => $property->agent_id,
+            'property_id' => $property->id,
+            'message' => $req->message ?? null,
+        ]);
+        return response('success',200);
+    }
+    public function dataTableEnquiry($id,$user_type)
+    {
+        if($user_type == 0)
+        {
+            return DataTables::eloquent(Enquiry::with('property'))->make(true);
+        }
+        else
+        {
+            return DataTables::eloquent(Enquiry::with('property')->whereAgentId($id))->make(true);
+        }
+
     }
 }

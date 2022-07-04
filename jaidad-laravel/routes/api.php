@@ -36,6 +36,8 @@ Route::delete('/property/{property}/delete',[PropertyController::class,'delete']
 Route::put('/property/{property}/update',[PropertyController::class,'update'])->name('update.property');
 Route::post('property/featured/{property}',[PropertyController::class,'featured']);
 Route::post('property/status/{property}',[PropertyController::class,'status']);
+Route::post('property/enquiry/{property}',[PropertyController::class,'enquiry']);
+Route::get('/enquires/{id}/{user_type}',[PropertyController::class,'dataTableEnquiry'])->name('enquiries.datatable');
 
 // Property Features
 Route::get('/property/{property}/features',[PropertyController::class,'showFeatures'])->name('property.features');

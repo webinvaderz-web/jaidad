@@ -54,19 +54,23 @@ class UserController extends Controller
     {
         $req->validate(['email'=>'required','password'=>'required']);
         $user = User::whereEmail($req->email)->first();
-        if(password_verify($req->password,$user->password))
+        if($user)
         {
-            $data = [];
-            $data[0] = 'success';
-            $data[1] =
-            [
-                'user_id'=>$user->id,
-                'name'=>$user->name,
-                'user_type'=>$user->user_type
-            ];
+            if(password_verify($req->password,$user->password))
+            {
+                $data = [];
+                $data[0] = 'success';
+                $data[1] =
+                [
+                    'user_id'=>$user->id,
+                    'name'=>$user->name,
+                    'user_type'=>$user->user_type
+                ];
 
-            return response($data,200);
+                return response($data,200);
+            }
         }
+
         else
         {
             return response('fail',200);

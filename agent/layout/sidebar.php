@@ -103,7 +103,12 @@
                             <p>Feature Details</p>
                         </a>
             </li>
-
+            <li class="nav-item">
+                        <a href="enquiry.php" class="nav-link">
+                            <i class="nav-icon far fa-file"></i>
+                            <p>Enquires</p>
+                        </a>
+            </li>
 
             <!-- <li class="nav-item">
                 <a href="myprofile.php" class="nav-link">

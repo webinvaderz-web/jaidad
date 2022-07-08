@@ -104,6 +104,12 @@
                         </a>
             </li>
             <li class="nav-item">
+                        <a href="cities.php" class="nav-link">
+                            <i class="nav-icon far fa-image"></i>
+                            <p>Cities</p>
+                        </a>
+            </li>
+            <li class="nav-item">
                         <a href="enquiry.php" class="nav-link">
                             <i class="nav-icon far fa-file"></i>
                             <p>Enquires</p>

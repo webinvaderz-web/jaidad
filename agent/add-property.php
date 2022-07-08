@@ -146,6 +146,13 @@ position:absolute;
 
                                                     </div>
 
+                                                    <div class="form-group col-md-4">
+                                                    <label for="">Select City</label>
+                                                        <select id="city_ids" class="city_ids form-control"  name="city_ids[]">
+                                                            <option value="" disabled selected>Please Select City</option>
+                                                        </select>
+                                                    </div>
+
 
 
                                                     <div class="form-group col-md-4">
@@ -370,6 +377,12 @@ position:absolute;
                     }); 
         })
 
+        axios.get('<?php echo $host_url; ?>/cities').then((res)=>{
+            Object.keys(res.data).forEach(key => {
+                $('.city_ids').append('<option value=' + res.data[key]['id'] + '>' + res.data[key]['name'] + '</option>');
+                    }); 
+        })
+
 
         
         $('.feature_ids').select2();
@@ -394,6 +407,8 @@ position:absolute;
             formData.append('year_built',$('#year_built').val());
             formData.append('plot_size_prefix',$('#plot_size_prefix').val());
             formData.append('plot_size',$('#plot_size').val());
+            formData.append('city_id',$('#city_ids').val());
+            
             formData.append('agent_id',<?php echo $_SESSION['user_id'] ?>);
 
             $("#feature_ids > option:selected").each(function() {

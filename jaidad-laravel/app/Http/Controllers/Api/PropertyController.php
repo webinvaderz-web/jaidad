@@ -111,6 +111,7 @@ class PropertyController extends Controller
             'title'=>'required',
             'description'=>'required',
             'price'=>'required',
+            'city_id'=>'required',
             'property_type'=>'required',
             'type'=>'required',
             'bedrooms'=>'required',

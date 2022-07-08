@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\CityController;
 use App\Http\Controllers\Api\FeatureController;
 use App\Http\Controllers\Api\FeatureDetailController;
 use App\Http\Controllers\Api\PropertyController;
@@ -49,6 +50,15 @@ Route::get('/feature/{feature}',[FeatureController::class,'show'])->name('featur
 Route::delete('/feature/{feature}/delete',[FeatureController::class,'delete'])->name('delete.feature');
 Route::put('/feature/{feature}/update',[FeatureController::class,'update'])->name('update.feature');
 Route::get('/features/datatable',[FeatureController::class,'dataTable'])->name('features.datatable');
+
+// FEATURE ROUTES
+Route::get('/cities',[CityController::class,'index'])->name('cities');
+Route::post('/city',[CityController::class,'store'])->name('store.city');
+Route::get('/city/{city}',[CityController::class,'show'])->name('city');
+Route::delete('/city/{city}/delete',[CityController::class,'delete'])->name('delete.city');
+Route::put('/city/{city}/update',[CityController::class,'update'])->name('update.city');
+Route::get('/cities/datatable',[CityController::class,'dataTable'])->name('cities.datatable');
+Route::post('/city-properties',[CityController::class,'city_properties'])->name('city.properties');
 
 Route::get('/feature-details',[FeatureDetailController::class,'index'])->name('feature_details');
 Route::post('/feature-detail',[FeatureDetailController::class,'store'])->name('feature_detail.store');

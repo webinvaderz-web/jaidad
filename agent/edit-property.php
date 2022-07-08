@@ -149,6 +149,12 @@ position:absolute;
 
                                                     </div>
 
+                                                    <div class="form-group col-md-4">
+                                                    <label for="">Select City</label>
+                                                        <select id="city_ids" class="city_ids form-control"  name="city_ids[]">
+                                                            <option value="" disabled selected>Please Select City</option>
+                                                        </select>
+                                                    </div>
 
 
                                                     <div class="form-group col-md-4">
@@ -347,6 +353,12 @@ position:absolute;
                     }); 
         })
 
+        axios.get('<?php echo $host_url; ?>/cities').then((res)=>{
+            Object.keys(res.data).forEach(key => {
+                $('.city_ids').append('<option value=' + res.data[key]['id'] + '>' + res.data[key]['name'] + '</option>');
+                    }); 
+        })
+
         let image_path = '<?php echo $file_path; ?>' ;
         axios.get('<?php echo $host_url; ?>/property/<?php echo $_GET['edit_id']  ?>').then((res)=>{
       
@@ -354,6 +366,7 @@ position:absolute;
         $('#description').val(res.data.description);
         $('#price').val(res.data.price);
         $('#property_type option[value="'+res.data.property_type+'"]').attr("selected", true);
+        $('#city_ids option[value="'+res.data.city_id+'"]').attr("selected", true);
         $('#type option[value="'+res.data.type+'"]').attr("selected", true);
         $('#bedrooms').val(res.data.bedrooms);
         $('#bathrooms').val(res.data.bathrooms);
@@ -456,6 +469,7 @@ position:absolute;
             formData.append('parking_spaces',$('#parking_spaces').val());
             formData.append('year_built',$('#year_built').val());
             formData.append('plot_size_prefix',$('#plot_size_prefix').val());
+            formData.append('city_id',$('#city_ids').val());
             formData.append('plot_size',$('#plot_size').val());
             $("#feature_ids > option:selected").each(function() {
                 formData.append('feature_detail_ids[]', this.value);

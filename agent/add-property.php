@@ -42,7 +42,8 @@ width:100%;
 position:absolute;
 }
 </style> -->
-
+<script src='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet' />
 </head>
 
 <body class="hold-transition sidebar-mini" ng-app="myapp" ng-controller="mycontroller" ng-init="getPropeties()">
@@ -163,10 +164,7 @@ position:absolute;
                                                             <option value="rent">Rent</option>
                                                         </select>
                                                     </div>
-                                                    <div class="form-group col-md-4">
-                                                        <label for="">Location</label>
-                                                        <input type="text" class="form-control" name="location" id="location" placeholder="">
-                                                    </div>
+                                         
                                                     <div class="form-group col-md-4">
                                                         <label for="inputState">Property Type</label>
                                                         <select id="property_type" name="property_type" class="form-control">
@@ -197,6 +195,7 @@ position:absolute;
                                                         <label for="">Year Built</label>
                                                         <input type="number" class="form-control" id="year_built" placeholder="" name="year_built">
                                                     </div>
+                                                    
                                                     <div class="form-group col-md-4">
                                                         <label for="inputState">Plot Size Prefix</label>
                                                         <select id="plot_size_prefix" name="plot_size_prefix" class="form-control">
@@ -213,6 +212,10 @@ position:absolute;
                                                     <label for="">Select Features</label>
                                                         <select id="feature_ids" class="feature_ids form-control" multiple  name="feature_detail_ids[]">
                                                         </select>
+                                                    </div>
+                                                    <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                                                        <label for="">Location</label>
+                                                        <div id='map' style='width: 400px; height: 300px;'></div>
                                                     </div>
                                                 
                                                 </div>
@@ -232,7 +235,8 @@ position:absolute;
                                                             <label for="" class="form-label">Image Gallery</label>
                                                             <input type="file" class="form-control image_gallery" id="image_gallery" multiple  placeholder="" name="image_gallery[]">
                                                         </div>
-
+                                                        <input type="text" id="lng" name="longitude" val="" hidden>
+                                                        <input type="text" id="lat" name="latitude" val=""  hidden>
                                                 </div>
                                                
                                             </div>
@@ -311,9 +315,55 @@ position:absolute;
         })
     })
 </script>
-
+<script src="https://unpkg.com/@mapbox/mapbox-sdk/umd/mapbox-sdk.min.js"></script>
+<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js'></script>
+<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css' type='text/css' />
 <script>
+    
+
     $(function() {
+    
+    let accessToken = '<?php echo $mapbox_access_token; ?>';
+    mapboxgl.accessToken = accessToken;
+    const coordinates = document.getElementById('coordinates');
+    const map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v11',
+    center: [67.128448, 24.929374],
+    zoom: 9
+    });
+    const marker = new mapboxgl.Marker({
+    draggable: true
+    })
+    .setLngLat([67.128448, 24.929374])
+    .addTo(map);
+
+    function onDragEnd() {
+        const lngLat = marker.getLngLat();
+        console.log(lngLat.lng + " - " + lngLat.lat);
+        $('#lng').val(lngLat.lng);
+        $('#lat').val(lngLat.lat);
+    }
+
+    marker.on('dragend', onDragEnd);
+
+    const geocoder = new MapboxGeocoder({
+    countries: 'pk',
+    accessToken: accessToken,
+    mapboxgl: map, 
+    marker: false
+    });
+    map.addControl(geocoder);
+
+    map.on('click', add_marker.bind(this));
+    function add_marker (event) {
+    var coordinates = event.lngLat;
+    $('#lng').val(coordinates.lng);
+    $('#lat').val(coordinates.lat);
+    marker.setLngLat(coordinates).addTo(map);
+        }
+
+        // let api_token = "pk.eyJ1IjoidGVzdGRldnRlc3QiLCJhIjoiY2w1YjYzaW9nMDRpOTNpbXVkM291anF6cCJ9.aVOgTTGLzbcAbmHkc09Ffg";
         axios.get('<?php echo $host_url; ?>/feature-details').then((res)=>{
             Object.keys(res.data).forEach(key => {
                 $('.feature_ids').append('<option value=' + res.data[key]['id'] + '>' + res.data[key]['name'] + '</option>');
@@ -331,7 +381,8 @@ position:absolute;
             var formData = new FormData();
             formData.append('title',$('#title').val());
             formData.append('description',$('#description').val());
-            formData.append('location',$('#description').val());
+            formData.append('longitude',$('#lng').val());
+            formData.append('latitude',$('#lat').val());
             formData.append('area',$('#description').val());
             formData.append('price',$('#price').val());
             formData.append('old_price',$('#old_price').val());

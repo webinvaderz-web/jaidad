@@ -42,6 +42,8 @@ width:100%;
 position:absolute;
 }
 </style> -->
+<script src='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet' />
 
 </head>
 
@@ -165,10 +167,7 @@ position:absolute;
                                                             <option value="rent">Rent</option>
                                                         </select>
                                                     </div>
-                                                    <div class="form-group col-md-4">
-                                                        <label for="">Location</label>
-                                                        <input type="text" class="form-control" name="location" id="location" placeholder="">
-                                                    </div>
+                                              
                                                     <div class="form-group col-md-4">
                                                         <label for="inputState">Property Type</label>
                                                         <select id="property_type" name="property_type" class="form-control">
@@ -216,6 +215,10 @@ position:absolute;
                                                         <select id="feature_ids" class="feature_ids form-control" multiple  name="feature_detail_ids[]">
                                                         </select>
                                                     </div>
+                                                    <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                                                        <label for="">Location</label>
+                                                        <div id='map' style='width: 400px; height: 300px;'></div>
+                                                    </div>
 
                                                 </div>
                                             </div>
@@ -248,7 +251,8 @@ position:absolute;
 
                                                 </div>
                                           
-
+                                                <input type="text" id="lng" name="longitude" val="" hidden>
+                                                        <input type="text" id="lat" name="latitude" val=""  hidden>
 
                                             </div>
                                          
@@ -327,6 +331,9 @@ position:absolute;
         })
     })
 </script>
+<script src="https://unpkg.com/@mapbox/mapbox-sdk/umd/mapbox-sdk.min.js"></script>
+<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js'></script>
+<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css' type='text/css' />
 <script>
     $(function() {
 
@@ -348,7 +355,6 @@ position:absolute;
         $('#price').val(res.data.price);
         $('#property_type option[value="'+res.data.property_type+'"]').attr("selected", true);
         $('#type option[value="'+res.data.type+'"]').attr("selected", true);
-        $('#location').val(res.data.location);
         $('#bedrooms').val(res.data.bedrooms);
         $('#bathrooms').val(res.data.bathrooms);
         $('#parking_spaces').val(res.data.parking_spaces);
@@ -357,6 +363,10 @@ position:absolute;
         $('#plot_size_prefix option[value="'+res.data.plot_size_prefix+'"]').attr("selected", true);
         $('#plot_size').val(res.data.plot_size);
         $( '#featured' ).attr( 'src', image_path+res.data.property_gallery.featured_image );
+        $('#lng').val(res.data.longitude);
+        $('#lat').val(res.data.latitude);
+        
+
         if(res.data.feature_details != null)
         {
             Object.keys(res.data.feature_details).forEach(key => {
@@ -382,8 +392,51 @@ position:absolute;
             })
         }
         $(".loader").css("display", "none");
+        getMap();
         })
-        
+
+        function getMap()
+        {
+        let accessToken = '<?php echo $mapbox_access_token; ?>'
+        mapboxgl.accessToken = accessToken;
+        const coordinates = document.getElementById('coordinates');
+        const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [$('#lng').val() ?? 67.128448, $('#lat').val() ?? 24.929374],
+        zoom: 9
+        });
+        const marker = new mapboxgl.Marker({
+        draggable: true
+        })
+        .setLngLat([$('#lng').val() ?? 67.128448,$('#lat').val() ?? 24.929374])
+        .addTo(map);
+
+        console.log($('#lng').val() + "Sorryy");
+        function onDragEnd() {
+            const lngLat = marker.getLngLat();
+            console.log(lngLat.lng + " - " + lngLat.lat);
+            $('#lng').val(lngLat.lng);
+            $('#lat').val(lngLat.lat);
+        }
+
+        marker.on('dragend', onDragEnd);
+        const geocoder = new MapboxGeocoder({
+        countries: 'pk',
+        accessToken: accessToken,
+        mapboxgl: map, 
+        marker: false
+        });
+        map.addControl(geocoder);
+
+        map.on('click', add_marker.bind(this));
+        function add_marker (event) {
+        var coordinates = event.lngLat;
+        $('#lng').val(coordinates.lng);
+        $('#lat').val(coordinates.lat);
+        marker.setLngLat(coordinates).addTo(map);
+        }
+    }
         $('.ali').click(function()
         {
             // console.log(document.getElementById('featured_image').files[0]);
@@ -391,7 +444,8 @@ position:absolute;
             formData.append('_method','PUT');
             formData.append('title',$('#title').val());
             formData.append('description',$('#description').val());
-            formData.append('location',$('#description').val());
+            formData.append('longitude',$('#lng').val());
+            formData.append('latitude',$('#lat').val());
             formData.append('area',$('#description').val());
             formData.append('price',$('#price').val());
             formData.append('old_price',$('#old_price').val());
